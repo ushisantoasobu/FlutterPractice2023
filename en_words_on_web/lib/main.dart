@@ -84,7 +84,7 @@ class WordItemView extends StatelessWidget {
               word.title,
               style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
             ),
-            const Text('hoge')
+            Text(word.description ?? '')
           ],
         ));
   }
