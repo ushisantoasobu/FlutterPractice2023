@@ -2,10 +2,10 @@ import 'package:en_words_on_web/model/word.dart';
 
 class WordRepository {
   List<Word> words = [
-    Word('1', 'apple'),
-    Word('2', 'orange'),
-    Word('3', 'grape'),
-    Word('4', 'pineapple'),
+    Word('apple'),
+    Word('orange'),
+    Word('grape'),
+    Word('pineapple'),
   ];
 
   List<Word> fetch() {
@@ -13,6 +13,6 @@ class WordRepository {
   }
 
   void add() {
-    words.add(Word('10000', 'wine'));
+    words.add(Word('wine'));
   }
 }

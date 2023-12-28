@@ -1,7 +1,9 @@
-class Word {
-  Word(this.id, this.title);
+import 'package:uuid/uuid.dart';
 
-  String id;
+class Word {
+  Word(this.title);
+
+  String id = Uuid().v4();
   String title;
   String? description;
   String? urlString;
