@@ -56,7 +56,12 @@ class _WordListPageState extends State<WordListPage> {
       body: ListView.builder(
         itemCount: _words.length,
         itemBuilder: (BuildContext context, int index) {
-          return WordItemView(word: _words[index]);
+          return WordItemView(
+            word: _words[index],
+            onTap: () {
+              print(_words[index].title);
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -69,23 +74,30 @@ class _WordListPageState extends State<WordListPage> {
 }
 
 class WordItemView extends StatelessWidget {
-  const WordItemView({super.key, required this.word});
+  const WordItemView({super.key, required this.word, this.onTap});
 
   final Word word;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              word.title,
-              style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-            ),
-            Text(word.description ?? '')
-          ],
-        ));
+    return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          onTap?.call();
+        },
+        child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  word.title,
+                  style: const TextStyle(
+                      fontSize: 21, fontWeight: FontWeight.bold),
+                ),
+                Text(word.description ?? '')
+              ],
+            )));
   }
 }
