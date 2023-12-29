@@ -1,6 +1,15 @@
 import 'package:en_words_on_web/model/word.dart';
 
 class WordRepository {
+  // singleton: テスト用のため
+  static final WordRepository _instance = WordRepository._internal();
+
+  factory WordRepository() {
+    return _instance;
+  }
+
+  WordRepository._internal();
+
   List<Word> words = [
     Word(
         title: 'apple',
@@ -24,10 +33,11 @@ class WordRepository {
     return words;
   }
 
-  void add() {
-    words.add(Word(
-        title: 'wine',
-        description: 'the color is like blood',
-        urlString: null));
+  void add(Word word) {
+    words.add(word);
+    // words.add(Word(
+    //     title: 'wine',
+    //     description: 'the color is like blood',
+    //     urlString: null));
   }
 }

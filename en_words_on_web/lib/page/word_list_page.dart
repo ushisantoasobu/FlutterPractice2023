@@ -1,4 +1,5 @@
 import 'package:en_words_on_web/model/word.dart';
+import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,9 +21,8 @@ class _WordListPageState extends State<WordListPage> {
     _words = repository.fetch();
   }
 
-  void _addItem() {
+  void _refresh() {
     setState(() {
-      repository.add();
       _words = repository.fetch();
     });
   }
@@ -69,7 +69,15 @@ class _WordListPageState extends State<WordListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addItem,
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return const WordCreateOrEditPage(
+              title: '作成',
+            );
+          })).then((value) {
+            _refresh();
+          });
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
