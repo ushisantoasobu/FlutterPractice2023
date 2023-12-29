@@ -26,25 +26,50 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
       ),
       body: Container(
           padding: const EdgeInsets.all(16),
+          // TODO: Formで囲むと良い？？
+          // https://qiita.com/kurun_pan/items/3378875ff034614f381a#form
+          // validationの処理などを綺麗に書ける？
           child: Column(
             children: [
               TextField(
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: 'Enter a search term'),
+                decoration: const InputDecoration(hintText: 'Title'),
                 onChanged: (value) {
                   title = value;
                 },
               ),
+              const SizedBox(height: 24),
+              TextField(
+                decoration:
+                    const InputDecoration(hintText: 'Description (optional)'),
+                onChanged: (value) {
+                  description = value;
+                },
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                decoration: const InputDecoration(hintText: 'URL (optional)'),
+                onChanged: (value) {
+                  urlString = value;
+                },
+              ),
+              const SizedBox(height: 24),
               Container(
                 padding: EdgeInsets.all(10),
                 child: ElevatedButton(
-                  child: Text('完了'),
+                  child: const Text('完了'),
                   onPressed: () {
                     if (title.isEmpty) {
                       return;
                     }
 
-                    Word word = Word(title: title);
+                    String? finalDescription =
+                        description.isEmpty ? null : description;
+                    String? finalUrlString =
+                        urlString.isEmpty ? null : urlString;
+                    Word word = Word(
+                        title: title,
+                        description: finalDescription,
+                        urlString: finalUrlString);
                     WordRepository().add(word);
                     Navigator.of(context).pop();
                   },
