@@ -1,6 +1,7 @@
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/repository.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +60,30 @@ class _WordListPageState extends State<WordListPage> {
           return WordItemView(
             word: _words[index],
             onTap: () {
-              print(_words[index].title);
+              if (_words[index].urlString != null) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("確認"),
+                      content: const Text("ブラウザで開きますか？"),
+                      actions: [
+                        TextButton(
+                          child: const Text("Cancel"),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        TextButton(
+                          child: const Text("OK"),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _launchInBrowserView(_words[index].urlString!);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
           );
         },
@@ -70,6 +94,13 @@ class _WordListPageState extends State<WordListPage> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _launchInBrowserView(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
 
