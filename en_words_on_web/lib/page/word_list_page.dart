@@ -41,30 +41,6 @@ class _WordListPageState extends State<WordListPage> {
           return WordItemView(
             word: _words[index],
             onTap: () {
-              // if (_words[index].urlString != null) {
-              //   showDialog(
-              //     context: context,
-              //     builder: (context) {
-              //       return AlertDialog(
-              //         title: const Text("確認"),
-              //         content: const Text("ブラウザで開きますか？"),
-              //         actions: [
-              //           TextButton(
-              //             child: const Text("Cancel"),
-              //             onPressed: () => Navigator.pop(context),
-              //           ),
-              //           TextButton(
-              //             child: const Text("OK"),
-              //             onPressed: () {
-              //               Navigator.pop(context);
-              //               _launchInBrowserView(_words[index].urlString!);
-              //             },
-              //           ),
-              //         ],
-              //       );
-              //     },
-              //   );
-              // }
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                 return WordDetailPage(
                   word: _words[index],
@@ -90,13 +66,6 @@ class _WordListPageState extends State<WordListPage> {
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  Future<void> _launchInBrowserView(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
-      throw Exception('Could not launch $url');
-    }
   }
 }
 

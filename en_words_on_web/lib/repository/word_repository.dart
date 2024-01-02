@@ -12,21 +12,20 @@ class WordRepository {
 
   List<Word> words = [
     Word(
-        title: 'apple',
-        description: 'the color is red',
-        urlString: "https://www.yahoo.co.jp/"),
+        title: 'premise',
+        description: '前提',
+        urlString:
+            'https://statsbomb.com/articles/soccer/introducing-hops-a-new-way-to-evaluate-heading-ability/'),
     Word(
-        title: 'orange',
-        description: 'the color is orange',
-        urlString: "https://www.yahoo.co.jp/"),
+        title: 'aggression',
+        description: '攻撃',
+        urlString:
+            'https://statsbomb.com/articles/soccer/introducing-hops-a-new-way-to-evaluate-heading-ability/'),
     Word(
-        title: 'grape',
-        description: 'the color is purple',
-        urlString: "https://www.yahoo.co.jp/"),
-    Word(
-        title: 'pineapple',
-        description: 'the color is yellow',
-        urlString: "https://www.yahoo.co.jp/"),
+        title: 'strive',
+        description: '努力する',
+        urlString:
+            'https://statsbomb.com/articles/soccer/introducing-hops-a-new-way-to-evaluate-heading-ability/'),
   ];
 
   List<Word> fetch() {
