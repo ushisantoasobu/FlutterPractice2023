@@ -65,13 +65,18 @@ class _WordQuizPageState extends State<WordQuizPage> {
               Text(words[currentIndex].title,
                   style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
               const SizedBox(height: 24),
-              Visibility(
-                  visible: canSeeDescription,
-                  maintainSize: true,
-                  maintainAnimation: true,
-                  maintainState: true,
-                  child: Text(words[currentIndex].description ?? "",
-                      style: const TextStyle(fontSize: 18, color: Colors.red)))
+              AnimatedOpacity(
+                  opacity: canSeeDescription ? 1.0 : 0.0,
+                  curve: Curves.easeIn,
+                  duration: const Duration(milliseconds: 300),
+                  child: Visibility(
+                      visible: canSeeDescription,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: Text(words[currentIndex].description ?? "",
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.red)))),
             ]),
             Expanded(child: Container()),
             Row(children: [
