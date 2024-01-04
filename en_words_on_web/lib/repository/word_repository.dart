@@ -26,6 +26,8 @@ class WordRepository {
         description: '努力する',
         urlString:
             'https://statsbomb.com/articles/soccer/introducing-hops-a-new-way-to-evaluate-heading-ability/'),
+    Word(title: 'thrive', description: '繁栄する', urlString: null),
+    Word(title: 'chevron', description: null, urlString: null),
   ];
 
   List<Word> fetch() {

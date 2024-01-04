@@ -99,6 +99,11 @@ class _WordQuizPageState extends State<WordQuizPage> {
 class WordQuizOrganizer {
   List<Word> createList() {
     // TODO: 仮
-    return WordRepository().fetch();
+    List<Word> list = WordRepository()
+        .fetch()
+        .where((element) => element.description != null)
+        .toList();
+    list.shuffle();
+    return list;
   }
 }
