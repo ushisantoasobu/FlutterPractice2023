@@ -1,6 +1,7 @@
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:en_words_on_web/page/word_detail_page.dart';
+import 'package:en_words_on_web/page/word_quiz_page.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,6 +35,16 @@ class _WordListPageState extends State<WordListPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return WordQuizPage();
+                }));
+              },
+              icon: const Icon(Icons.quiz))
+        ],
       ),
       body: ListView.builder(
         itemCount: _words.length,

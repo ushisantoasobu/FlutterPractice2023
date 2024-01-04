@@ -54,86 +54,121 @@ class _WordDetailPageState extends State<WordDetailPage> {
           title: Text(widget.word.title),
         ),
         body: Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('単語'),
-              Text(
-                widget.word.title,
-                style:
-                    const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 24),
+              Card(
+                  child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('単語'),
+                            const SizedBox(height: 8),
+                            Text(
+                              widget.word.title,
+                              style: const TextStyle(
+                                  fontSize: 21, fontWeight: FontWeight.bold),
+                            ),
+                          ]))),
+              const SizedBox(height: 16),
               // Description
-              const Text('意味'),
-              Text(
-                widget.word.description ?? '-',
-                style: const TextStyle(fontSize: 16),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  _showLoading();
-                  // DictionaryRequest().fetch('hogehoge').then((value) {
-                  DictionaryRequest().fetch(widget.word.title).then((response) {
-                    _hideLoading();
-                    _setWordDictionary(
-                        response.meanings.first.definitions.first.definition);
-                  }).catchError((e) {
-                    _hideLoading();
-                    _showWordDictionaryError();
-                  });
-                },
-                child: wordDictionaryLoading
-                    ? const Text('loading...')
-                    : const Text('check'),
-              ),
-              Visibility(
-                visible: wordDictionary != null,
-                maintainSize: false,
-                child: Text(wordDictionary?.content ?? ''),
-              ),
-              Visibility(
-                visible: wordDictionaryError,
-                maintainSize: false,
-                child: const Text('エラーが発生しました'),
-              ),
-              const SizedBox(height: 24),
+              Card(
+                  child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('意味'),
+                            const SizedBox(height: 8),
+                            Text(
+                              widget.word.description ?? '-',
+                              style: const TextStyle(
+                                  fontSize: 21, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 24),
+                            OutlinedButton(
+                              onPressed: () {
+                                _showLoading();
+                                // DictionaryRequest().fetch('hogehoge').then((value) {
+                                DictionaryRequest()
+                                    .fetch(widget.word.title)
+                                    .then((response) {
+                                  _hideLoading();
+                                  _setWordDictionary(response.meanings.first
+                                      .definitions.first.definition);
+                                }).catchError((e) {
+                                  _hideLoading();
+                                  _showWordDictionaryError();
+                                });
+                              },
+                              child: wordDictionaryLoading
+                                  ? const Text('loading...')
+                                  : const Text('check'),
+                            ),
+                            Visibility(
+                              visible: wordDictionary != null,
+                              maintainSize: false,
+                              child: Text(wordDictionary?.content ?? ''),
+                            ),
+                            Visibility(
+                              visible: wordDictionaryError,
+                              maintainSize: false,
+                              child: const Text('エラーが発生しました'),
+                            )
+                          ]))),
+              const SizedBox(height: 16),
               // URL
-              const Text('URL'),
-              Text(
-                widget.word.urlString ?? '-',
-                style: const TextStyle(fontSize: 12),
-              ),
-              if (widget.word.urlString != null)
-                OutlinedButton(
-                  onPressed: () {
-                    if (widget.word.urlString != null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text("確認"),
-                            content: const Text("ブラウザで開きますか？"),
-                            actions: [
-                              TextButton(
-                                child: const Text("Cancel"),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                              TextButton(
-                                child: const Text("OK"),
+              Card(
+                  child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('URL'),
+                            const SizedBox(height: 8),
+                            Text(
+                              widget.word.urlString ?? '-',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const SizedBox(height: 24),
+                            if (widget.word.urlString != null)
+                              OutlinedButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
-                                  _launchInBrowserView(widget.word.urlString!);
+                                  if (widget.word.urlString != null) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text("確認"),
+                                          content: const Text("ブラウザで開きますか？"),
+                                          actions: [
+                                            TextButton(
+                                              child: const Text("Cancel"),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                            TextButton(
+                                              child: const Text("OK"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                _launchInBrowserView(
+                                                    widget.word.urlString!);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
                                 },
+                                child: const Text('開く'),
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: const Text('開く'),
-                ),
+                          ]))),
             ])));
   }
 
