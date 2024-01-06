@@ -46,7 +46,7 @@ class _WordListPageState extends State<WordListPage> {
               icon: const Icon(Icons.quiz))
         ],
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: _words.length,
         itemBuilder: (BuildContext context, int index) {
           return WordItemView(
@@ -61,6 +61,9 @@ class _WordListPageState extends State<WordListPage> {
               });
             },
           );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider(height: 1);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -103,7 +106,13 @@ class WordItemView extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 21, fontWeight: FontWeight.bold),
                 ),
-                Text(word.description ?? '')
+                if (word.description != null)
+                  Text(word.description ?? '（未設定）')
+                else
+                  const Text(
+                    '（未設定）',
+                    style: TextStyle(color: Colors.grey),
+                  )
               ],
             )));
   }
