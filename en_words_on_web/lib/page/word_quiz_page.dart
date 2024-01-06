@@ -1,6 +1,7 @@
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WordQuizPage extends StatefulWidget {
   const WordQuizPage({super.key});
@@ -54,7 +55,8 @@ class _WordQuizPageState extends State<WordQuizPage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: const Text('クイズ')),
+            // title: const Text('クイズ')),
+            title: Text(AppLocalizations.of(context)!.helloWorld)),
         body: SafeArea(
             child: Column(
           children: [
