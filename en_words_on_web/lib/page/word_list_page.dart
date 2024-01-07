@@ -16,7 +16,7 @@ class WordListPage extends StatefulWidget {
 }
 
 class _WordListPageState extends State<WordListPage> {
-  WordRepository repository = WordRepository();
+  WordRepository repository = WordRepositoryImpl();
   late List<Word> _words; // lateは強引？
 
   _WordListPageState() {

@@ -1,14 +1,18 @@
 import 'package:en_words_on_web/model/word.dart';
 
-class WordRepository {
-  // singleton: テスト用のため
-  static final WordRepository _instance = WordRepository._internal();
+abstract class WordRepository {
+  List<Word> fetch();
+}
 
-  factory WordRepository() {
+class WordRepositoryImpl implements WordRepository {
+  // singleton: テスト用のため
+  static final WordRepositoryImpl _instance = WordRepositoryImpl._internal();
+
+  factory WordRepositoryImpl() {
     return _instance;
   }
 
-  WordRepository._internal();
+  WordRepositoryImpl._internal();
 
   List<Word> words = [
     Word(

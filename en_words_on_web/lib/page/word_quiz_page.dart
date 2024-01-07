@@ -19,7 +19,7 @@ class _WordQuizPageState extends State<WordQuizPage> {
   bool canGoToRight = false;
 
   _WordQuizPageState() {
-    words = WordQuizOrganizer().createList();
+    words = WordQuizOrganizer(repository: WordRepositoryImpl()).createList();
     _updateButtonStatus();
   }
 
@@ -99,9 +99,15 @@ class _WordQuizPageState extends State<WordQuizPage> {
 
 // TODO: 個別のファイルに移す
 class WordQuizOrganizer {
+  WordQuizOrganizer({
+    required WordRepository repository,
+  }) : _repository = repository;
+
+  final WordRepository _repository;
+
   List<Word> createList() {
     // TODO: 仮
-    List<Word> list = WordRepository()
+    List<Word> list = _repository
         .fetch()
         .where((element) => element.description != null)
         .toList();

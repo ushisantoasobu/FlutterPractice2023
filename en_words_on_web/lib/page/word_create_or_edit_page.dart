@@ -70,7 +70,7 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
                         title: title,
                         description: finalDescription,
                         urlString: finalUrlString);
-                    WordRepository().add(word);
+                    WordRepositoryImpl().add(word);
                     Navigator.of(context).pop();
                   },
                 ),
