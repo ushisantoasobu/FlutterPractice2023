@@ -40,7 +40,7 @@ class _WordListPageState extends State<WordListPage> {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return WordQuizPage();
+                  return WordQuizPage(repository: WordRepositoryImpl());
                 }));
               },
               icon: const Icon(Icons.quiz))

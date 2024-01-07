@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WordQuizPage extends StatefulWidget {
-  const WordQuizPage({super.key});
+  // TODO: どうinjectするのが良いのか分からず...
+  // ignore: prefer_const_constructors_in_immutables
+  WordQuizPage({super.key, required this.repository});
+
+  late final WordRepository repository;
 
   @override
   State<StatefulWidget> createState() => _WordQuizPageState();
@@ -18,8 +22,11 @@ class _WordQuizPageState extends State<WordQuizPage> {
   bool canGoToLeft = false;
   bool canGoToRight = false;
 
-  _WordQuizPageState() {
-    words = WordQuizOrganizer(repository: WordRepositoryImpl()).createList();
+  @override
+  void initState() {
+    super.initState();
+
+    words = WordQuizOrganizer(repository: widget.repository).createList();
     _updateButtonStatus();
   }
 
@@ -55,8 +62,8 @@ class _WordQuizPageState extends State<WordQuizPage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            // title: const Text('クイズ')),
-            title: Text(AppLocalizations.of(context)!.helloWorld)),
+            title: const Text('クイズ')),
+        // title: Text(AppLocalizations.of(context)!.helloWorld)),
         body: SafeArea(
             child: Column(
           children: [
@@ -65,7 +72,8 @@ class _WordQuizPageState extends State<WordQuizPage> {
             ),
             Column(children: [
               Text(words[currentIndex].title,
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 36, fontWeight: FontWeight.bold)),
               const SizedBox(height: 24),
               AnimatedOpacity(
                   opacity: canSeeDescription ? 1.0 : 0.0,
