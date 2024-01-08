@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:en_words_on_web/page/word_detail_page.dart';
 import 'package:en_words_on_web/page/word_quiz_page.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,114 +31,55 @@ class _WordListPageState extends State<WordListPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      // Android
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return WordQuizPage(repository: WordRepositoryImpl());
-                  }));
-                },
-                icon: const Icon(Icons.quiz))
-          ],
-        ),
-        body: ListView.separated(
-          itemCount: _words.length,
-          itemBuilder: (BuildContext context, int index) {
-            return WordItemView(
-              word: _words[index],
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return WordDetailPage(
-                    word: _words[index],
-                  );
-                })).then((value) {
-                  _refresh();
-                });
-              },
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider(height: 1);
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return const WordCreateOrEditPage(
-                title: '作成',
-              );
-            })).then((value) {
-              _refresh();
-            });
-          },
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
-      );
-    } else {
-      // iOS
-      return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            leading: GestureDetector(
-              onTap: () {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return WordQuizPage(repository: WordRepositoryImpl());
                 }));
               },
-              child: const Icon(
-                CupertinoIcons.question,
-                color: CupertinoColors.black,
-              ),
-            ),
-            middle: Text(widget.title),
-            trailing: GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const WordCreateOrEditPage(
-                    title: '作成',
-                  );
-                })).then((value) {
-                  _refresh();
-                });
-              },
-              child: const Icon(
-                CupertinoIcons.add,
-                color: CupertinoColors.black,
-              ),
-            ),
-          ),
-          child: ListView.separated(
-            itemCount: _words.length,
-            itemBuilder: (BuildContext context, int index) {
-              return WordItemView(
-                word: _words[index],
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return WordDetailPage(
-                      word: _words[index],
-                    );
-                  })).then((value) {
-                    _refresh();
-                  });
-                },
-              );
+              icon: const Icon(Icons.quiz))
+        ],
+      ),
+      body: ListView.separated(
+        itemCount: _words.length,
+        itemBuilder: (BuildContext context, int index) {
+          return WordItemView(
+            word: _words[index],
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return WordDetailPage(
+                  word: _words[index],
+                );
+              })).then((value) {
+                _refresh();
+              });
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return const Divider(height: 1);
-            },
-          ));
-    }
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const Divider(height: 1);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return const WordCreateOrEditPage(
+              title: '作成',
+            );
+          })).then((value) {
+            _refresh();
+          });
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
 
