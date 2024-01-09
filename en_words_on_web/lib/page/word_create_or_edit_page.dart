@@ -12,10 +12,10 @@ class WordCreateOrEditPage extends StatefulWidget {
 }
 
 class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
-  String title = "";
-  String description = "";
-  String urlString = "";
-  bool canFinish = false;
+  String _title = "";
+  String _description = "";
+  String _urlString = "";
+  // bool _canFinish = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
               TextField(
                 decoration: const InputDecoration(hintText: 'Title'),
                 onChanged: (value) {
-                  title = value;
+                  _title = value;
                 },
               ),
               const SizedBox(height: 24),
@@ -42,14 +42,14 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
                 decoration:
                     const InputDecoration(hintText: 'Description (optional)'),
                 onChanged: (value) {
-                  description = value;
+                  _description = value;
                 },
               ),
               const SizedBox(height: 24),
               TextField(
                 decoration: const InputDecoration(hintText: 'URL (optional)'),
                 onChanged: (value) {
-                  urlString = value;
+                  _urlString = value;
                 },
               ),
               const SizedBox(height: 24),
@@ -58,16 +58,16 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
                 child: ElevatedButton(
                   child: const Text('完了'),
                   onPressed: () {
-                    if (title.isEmpty) {
+                    if (_title.isEmpty) {
                       return;
                     }
 
                     String? finalDescription =
-                        description.isEmpty ? null : description;
+                        _description.isEmpty ? null : _description;
                     String? finalUrlString =
-                        urlString.isEmpty ? null : urlString;
+                        _urlString.isEmpty ? null : _urlString;
                     Word word = Word(
-                        title: title,
+                        title: _title,
                         description: finalDescription,
                         urlString: finalUrlString);
                     WordRepositoryImpl().add(word);

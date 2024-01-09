@@ -16,16 +16,16 @@ class WordListPage extends StatefulWidget {
 }
 
 class _WordListPageState extends State<WordListPage> {
-  WordRepository repository = WordRepositoryImpl();
+  final WordRepository _repository = WordRepositoryImpl();
   late List<Word> _words; // lateは強引？
 
   _WordListPageState() {
-    _words = repository.fetch();
+    _words = _repository.fetch();
   }
 
   void _refresh() {
     setState(() {
-      _words = repository.fetch();
+      _words = _repository.fetch();
     });
   }
 
@@ -84,17 +84,20 @@ class _WordListPageState extends State<WordListPage> {
 }
 
 class WordItemView extends StatelessWidget {
-  const WordItemView({super.key, required this.word, this.onTap});
+  // const WordItemView({super.key, required this.word, this.onTap});
+  WordItemView({super.key, required Word word, Function()? onTap})
+      : _word = word,
+        _onTap = onTap;
 
-  final Word word;
-  final Function()? onTap;
+  final Word _word;
+  final Function()? _onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          onTap?.call();
+          _onTap?.call();
         },
         child: Container(
             padding: const EdgeInsets.all(16),
@@ -102,12 +105,12 @@ class WordItemView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  word.title,
+                  _word.title,
                   style: const TextStyle(
                       fontSize: 21, fontWeight: FontWeight.bold),
                 ),
-                if (word.description != null)
-                  Text(word.description ?? '（未設定）')
+                if (_word.description != null)
+                  Text(_word.description ?? '（未設定）')
                 else
                   const Text(
                     '（未設定）',

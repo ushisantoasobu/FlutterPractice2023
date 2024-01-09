@@ -2,7 +2,6 @@ import 'package:en_words_on_web/api/dictionary_request.dart';
 import 'package:en_words_on_web/model/dictionary_word.dart';
 import 'package:en_words_on_web/model/word.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WordDetailPage extends StatefulWidget {
@@ -17,32 +16,32 @@ class WordDetailPage extends StatefulWidget {
 }
 
 class _WordDetailPageState extends State<WordDetailPage> {
-  bool wordDictionaryError = false;
-  DictionaryWord? wordDictionary;
-  bool wordDictionaryLoading = false;
+  bool _wordDictionaryError = false;
+  DictionaryWord? _wordDictionary;
+  bool _wordDictionaryLoading = false;
 
   void _showLoading() {
     setState(() {
-      wordDictionaryLoading = true;
+      _wordDictionaryLoading = true;
     });
   }
 
   void _hideLoading() {
     setState(() {
-      wordDictionaryLoading = false;
+      _wordDictionaryLoading = false;
     });
   }
 
   void _setWordDictionary(String content) {
     setState(() {
-      wordDictionaryError = false;
-      wordDictionary = DictionaryWord(content: content);
+      _wordDictionaryError = false;
+      _wordDictionary = DictionaryWord(content: content);
     });
   }
 
   void _showWordDictionaryError() {
     setState(() {
-      wordDictionaryError = true;
+      _wordDictionaryError = true;
     });
   }
 
@@ -105,17 +104,17 @@ class _WordDetailPageState extends State<WordDetailPage> {
                                   _showWordDictionaryError();
                                 });
                               },
-                              child: wordDictionaryLoading
+                              child: _wordDictionaryLoading
                                   ? const Text('loading...')
                                   : const Text('check'),
                             ),
                             Visibility(
-                              visible: wordDictionary != null,
+                              visible: _wordDictionary != null,
                               maintainSize: false,
-                              child: Text(wordDictionary?.content ?? ''),
+                              child: Text(_wordDictionary?.content ?? ''),
                             ),
                             Visibility(
-                              visible: wordDictionaryError,
+                              visible: _wordDictionaryError,
                               maintainSize: false,
                               child: const Text('エラーが発生しました'),
                             )
