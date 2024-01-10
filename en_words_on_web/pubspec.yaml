@@ -42,7 +42,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
-  riverpod: ^2.4.9
+  flutter_riverpod: ^2.4.9
 
 dev_dependencies:
   flutter_test:
