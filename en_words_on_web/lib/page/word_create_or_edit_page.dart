@@ -1,6 +1,6 @@
 import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/word.dart';
-import 'package:en_words_on_web/repository/word_repository.dart';
+import 'package:en_words_on_web/repository/word_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

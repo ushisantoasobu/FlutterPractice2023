@@ -2,7 +2,6 @@ import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:en_words_on_web/page/word_detail_page.dart';
 import 'package:en_words_on_web/page/word_quiz_page.dart';
-import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:en_words_on_web/main.dart';
@@ -28,7 +27,7 @@ class _WordListPageState extends State<WordListPage> {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return WordQuizPage(repository: WordRepositoryImpl());
+                  return WordQuizPage();
                 }));
               },
               icon: const Icon(Icons.quiz))

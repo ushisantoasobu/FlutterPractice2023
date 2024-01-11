@@ -1,17 +1,11 @@
 import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/word.dart';
-import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // about ConsumerStatefulWidget, ref: https://riverpod.dev/docs/concepts/reading#myproviderreadbuildcontext
 class WordQuizPage extends ConsumerStatefulWidget {
-  // TODO: どうinjectするのが良いのか分からず...
-  // ignore: prefer_const_constructors_in_immutables
-  WordQuizPage({super.key, required this.repository});
-
-  late final WordRepository repository;
+  const WordQuizPage({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _WordQuizPageState();

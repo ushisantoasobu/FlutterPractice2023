@@ -1,18 +1,20 @@
 import 'package:en_words_on_web/model/word.dart';
 
-class WordRepository {
+class WordDataSource {
   List<Word> fetch() => [];
+  void add(Word word) => {};
 }
 
-class WordRepositoryImpl implements WordRepository {
-  // singleton: テスト用のため
-  static final WordRepositoryImpl _instance = WordRepositoryImpl._internal();
+class WordDataSourceImpl implements WordDataSource {
+  // テスト用のためsingletonで
+  // 本来はローカルデータベースを用いる
+  static final WordDataSourceImpl _instance = WordDataSourceImpl._internal();
 
-  factory WordRepositoryImpl() {
+  factory WordDataSourceImpl() {
     return _instance;
   }
 
-  WordRepositoryImpl._internal();
+  WordDataSourceImpl._internal();
 
   List<Word> words = [
     Word(
@@ -39,6 +41,7 @@ class WordRepositoryImpl implements WordRepository {
     return words;
   }
 
+  @override
   void add(Word word) {
     words.add(word);
   }
