@@ -1,5 +1,10 @@
 import 'package:en_words_on_web/model/word.dart';
 
+// MEMO:
+// repositoryからDataSourceに置き換えたが、
+// Riverpodのサイトではrepositoryという名前の例が使われてるのを見つけた
+// ref: https://riverpod.dev/ja/docs/cookbooks/testing
+
 class WordDataSource {
   List<Word> fetch() => [];
   void add(Word word) => {};
