@@ -1,9 +1,12 @@
+import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WordQuizPage extends StatefulWidget {
+// about ConsumerStatefulWidget, ref: https://riverpod.dev/docs/concepts/reading#myproviderreadbuildcontext
+class WordQuizPage extends ConsumerStatefulWidget {
   // TODO: どうinjectするのが良いのか分からず...
   // ignore: prefer_const_constructors_in_immutables
   WordQuizPage({super.key, required this.repository});
@@ -11,10 +14,10 @@ class WordQuizPage extends StatefulWidget {
   late final WordRepository repository;
 
   @override
-  State<StatefulWidget> createState() => _WordQuizPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _WordQuizPageState();
 }
 
-class _WordQuizPageState extends State<WordQuizPage> {
+class _WordQuizPageState extends ConsumerState<WordQuizPage> {
   late List<Word> _words;
   int _currentIndex = 0;
   // bool wordIsEmpty = false;
@@ -26,7 +29,7 @@ class _WordQuizPageState extends State<WordQuizPage> {
   void initState() {
     super.initState();
 
-    _words = WordQuizOrganizer(repository: widget.repository).createList();
+    _words = WordQuizOrganizer(words: ref.read(wordListProvider)).createList();
     _updateButtonStatus();
   }
 
@@ -105,20 +108,17 @@ class _WordQuizPageState extends State<WordQuizPage> {
   }
 }
 
-// TODO: 個別のファイルに移す
 class WordQuizOrganizer {
   WordQuizOrganizer({
-    required WordRepository repository,
-  }) : _repository = repository;
+    required List<Word> words,
+  }) : _words = words;
 
-  final WordRepository _repository;
+  final List<Word> _words;
 
   List<Word> createList() {
     // TODO: 仮
-    List<Word> list = _repository
-        .fetch()
-        .where((element) => element.description != null)
-        .toList();
+    List<Word> list =
+        _words.where((element) => element.description != null).toList();
     list.shuffle();
     return list;
   }

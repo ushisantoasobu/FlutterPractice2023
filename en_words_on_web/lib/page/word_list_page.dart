@@ -4,7 +4,8 @@ import 'package:en_words_on_web/page/word_detail_page.dart';
 import 'package:en_words_on_web/page/word_quiz_page.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:en_words_on_web/main.dart';
 
 class WordListPage extends StatefulWidget {
   const WordListPage({super.key, required this.title});
@@ -16,19 +17,6 @@ class WordListPage extends StatefulWidget {
 }
 
 class _WordListPageState extends State<WordListPage> {
-  final WordRepository _repository = WordRepositoryImpl();
-  late List<Word> _words; // lateは強引？
-
-  _WordListPageState() {
-    _words = _repository.fetch();
-  }
-
-  void _refresh() {
-    setState(() {
-      _words = _repository.fetch();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,35 +34,34 @@ class _WordListPageState extends State<WordListPage> {
               icon: const Icon(Icons.quiz))
         ],
       ),
-      body: ListView.separated(
-        itemCount: _words.length,
-        itemBuilder: (BuildContext context, int index) {
-          return WordItemView(
-            word: _words[index],
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return WordDetailPage(
-                  word: _words[index],
-                );
-              })).then((value) {
-                _refresh();
-              });
-            },
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider(height: 1);
-        },
-      ),
+      body: Consumer(builder: (context, ref, child) {
+        return ListView.separated(
+          itemCount: ref.watch(wordListProvider).length,
+          itemBuilder: (BuildContext context, int index) {
+            return WordItemView(
+              word: ref.watch(wordListProvider)[index],
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return WordDetailPage(
+                    word: ref.watch(wordListProvider)[index],
+                  );
+                }));
+              },
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const Divider(height: 1);
+          },
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return const WordCreateOrEditPage(
               title: '作成',
             );
-          })).then((value) {
-            _refresh();
-          });
+          }));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -84,8 +71,7 @@ class _WordListPageState extends State<WordListPage> {
 }
 
 class WordItemView extends StatelessWidget {
-  // const WordItemView({super.key, required this.word, this.onTap});
-  WordItemView({super.key, required Word word, Function()? onTap})
+  const WordItemView({super.key, required Word word, Function()? onTap})
       : _word = word,
         _onTap = onTap;
 

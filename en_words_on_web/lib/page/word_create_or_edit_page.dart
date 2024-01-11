@@ -1,6 +1,8 @@
+import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/repository/word_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WordCreateOrEditPage extends StatefulWidget {
   const WordCreateOrEditPage({super.key, required this.title});
@@ -54,26 +56,29 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
               ),
               const SizedBox(height: 24),
               Container(
-                padding: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  child: const Text('完了'),
-                  onPressed: () {
-                    if (_title.isEmpty) {
-                      return;
-                    }
+                padding: const EdgeInsets.all(10),
+                child: Consumer(builder: (context, ref, child) {
+                  return ElevatedButton(
+                    child: const Text('完了'),
+                    onPressed: () {
+                      if (_title.isEmpty) {
+                        return;
+                      }
 
-                    String? finalDescription =
-                        _description.isEmpty ? null : _description;
-                    String? finalUrlString =
-                        _urlString.isEmpty ? null : _urlString;
-                    Word word = Word(
-                        title: _title,
-                        description: finalDescription,
-                        urlString: finalUrlString);
-                    WordRepositoryImpl().add(word);
-                    Navigator.of(context).pop();
-                  },
-                ),
+                      String? finalDescription =
+                          _description.isEmpty ? null : _description;
+                      String? finalUrlString =
+                          _urlString.isEmpty ? null : _urlString;
+                      Word word = Word(
+                          title: _title,
+                          description: finalDescription,
+                          urlString: finalUrlString);
+                      // WordRepositoryImpl().add(word);
+                      ref.read(wordListProvider.notifier).add(word: word);
+                      Navigator.of(context).pop();
+                    },
+                  );
+                }),
               ),
             ],
           )),
