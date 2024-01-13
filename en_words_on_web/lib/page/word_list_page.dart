@@ -57,9 +57,7 @@ class _WordListPageState extends State<WordListPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return const WordCreateOrEditPage(
-              title: '作成',
-            );
+            return WordCreateOrEditPage();
           }));
         },
         tooltip: 'Increment',

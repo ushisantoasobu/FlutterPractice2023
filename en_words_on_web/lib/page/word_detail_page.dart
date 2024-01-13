@@ -1,6 +1,7 @@
 import 'package:en_words_on_web/api/dictionary_request.dart';
 import 'package:en_words_on_web/model/dictionary_word.dart';
 import 'package:en_words_on_web/model/word.dart';
+import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,6 +52,16 @@ class _WordDetailPageState extends State<WordDetailPage> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.word.title),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return WordCreateOrEditPage(originalWord: widget.word);
+                  }));
+                },
+                icon: const Icon(Icons.edit))
+          ],
         ),
         body: Container(
             width: double.infinity,

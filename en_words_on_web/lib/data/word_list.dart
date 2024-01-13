@@ -12,7 +12,15 @@ class WordList extends StateNotifier<List<Word>> {
 
   void add({required Word word}) {
     _dataSource.add(word);
-    // TODO: この書き方は？
-    state = _dataSource.fetch();
+    final words = _dataSource.fetch();
+    state = [];
+    state = words;
+  }
+
+  void edit({required Word word}) {
+    _dataSource.edit(word);
+    final words = _dataSource.fetch();
+    state = [];
+    state = words;
   }
 }

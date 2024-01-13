@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test("WordQuizOrganizer_createList", () {
-    Word word_1 = Word(title: '1', description: 'fuga');
-    Word word_2 = Word(title: '2', description: null);
+    Word word_1 = Word.create(title: '1', description: 'fuga');
+    Word word_2 = Word.create(title: '2', description: null);
     WordQuizOrganizer organizer = WordQuizOrganizer(words: [word_1, word_2]);
     List<Word> words = organizer.createList();
 

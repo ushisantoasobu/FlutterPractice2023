@@ -13,7 +13,7 @@ void main() {
   testWidgets('WordQuizPage データが１つのとき', (WidgetTester tester) async {
     DummyWordDataSource dataSource = DummyWordDataSource();
     dataSource.words = [
-      Word(title: 'some title', description: 'some description')
+      Word.create(title: 'some title', description: 'some description')
     ];
 
     await tester.pumpWidget(ProviderScope(
@@ -43,8 +43,8 @@ void main() {
   testWidgets('WordQuizPage データが2つのとき', (WidgetTester tester) async {
     DummyWordDataSource dataSource = DummyWordDataSource();
     dataSource.words = [
-      Word(title: 'some title 1', description: 'some description 1'),
-      Word(title: 'some title 2', description: 'some description 2'),
+      Word.create(title: 'some title 1', description: 'some description 1'),
+      Word.create(title: 'some title 2', description: 'some description 2'),
     ];
 
     await tester.pumpWidget(ProviderScope(
@@ -101,4 +101,7 @@ class DummyWordDataSource implements WordDataSource {
 
   @override
   void add(Word word) {}
+
+  @override
+  void edit(Word word) {}
 }
