@@ -1,22 +1,25 @@
 import 'package:en_words_on_web/api/dictionary_request.dart';
+import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/dictionary_word.dart';
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/page/word_create_or_edit_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WordDetailPage extends StatefulWidget {
-  const WordDetailPage({super.key, required this.word});
+// TODO: ConsumerStatefulWidgetは全画面再構築になると思うが、、、これくらいの画面であれば問題ない？？
+class WordDetailPage extends ConsumerStatefulWidget {
+  const WordDetailPage({super.key, required this.wordId});
 
-  final Word word;
+  final String wordId;
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _WordDetailPageState();
   }
 }
 
-class _WordDetailPageState extends State<WordDetailPage> {
+class _WordDetailPageState extends ConsumerState<WordDetailPage> {
   bool _wordDictionaryError = false;
   DictionaryWord? _wordDictionary;
   bool _wordDictionaryLoading = false;
@@ -51,13 +54,14 @@ class _WordDetailPageState extends State<WordDetailPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.word.title),
+          title: Text(ref.watch(wordProvider(widget.wordId)).title),
           actions: [
             IconButton(
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return WordCreateOrEditPage(originalWord: widget.word);
+                    return WordCreateOrEditPage(
+                        originalWord: ref.watch(wordProvider(widget.wordId)));
                   }));
                 },
                 icon: const Icon(Icons.edit))
@@ -78,7 +82,7 @@ class _WordDetailPageState extends State<WordDetailPage> {
                             const Text('単語'),
                             const SizedBox(height: 8),
                             Text(
-                              widget.word.title,
+                              ref.watch(wordProvider(widget.wordId)).title,
                               style: const TextStyle(
                                   fontSize: 21, fontWeight: FontWeight.bold),
                             ),
@@ -95,7 +99,10 @@ class _WordDetailPageState extends State<WordDetailPage> {
                             const Text('意味'),
                             const SizedBox(height: 8),
                             Text(
-                              widget.word.description ?? '-',
+                              ref
+                                      .watch(wordProvider(widget.wordId))
+                                      .description ??
+                                  '-',
                               style: const TextStyle(
                                   fontSize: 21, fontWeight: FontWeight.bold),
                             ),
@@ -105,7 +112,9 @@ class _WordDetailPageState extends State<WordDetailPage> {
                                 _showLoading();
                                 // DictionaryRequest().fetch('hogehoge').then((value) {
                                 DictionaryRequest()
-                                    .fetch(widget.word.title)
+                                    .fetch(ref
+                                        .watch(wordProvider(widget.wordId))
+                                        .title)
                                     .then((response) {
                                   _hideLoading();
                                   _setWordDictionary(response.meanings.first
@@ -142,14 +151,23 @@ class _WordDetailPageState extends State<WordDetailPage> {
                             const Text('URL'),
                             const SizedBox(height: 8),
                             Text(
-                              widget.word.urlString ?? '-',
+                              ref
+                                      .watch(wordProvider(widget.wordId))
+                                      .urlString ??
+                                  '-',
                               style: const TextStyle(fontSize: 12),
                             ),
                             const SizedBox(height: 24),
-                            if (widget.word.urlString != null)
+                            if (ref
+                                    .watch(wordProvider(widget.wordId))
+                                    .urlString !=
+                                null)
                               OutlinedButton(
                                 onPressed: () {
-                                  if (widget.word.urlString != null) {
+                                  if (ref
+                                          .watch(wordProvider(widget.wordId))
+                                          .urlString !=
+                                      null) {
                                     showDialog(
                                       context: context,
                                       builder: (context) {
@@ -166,8 +184,10 @@ class _WordDetailPageState extends State<WordDetailPage> {
                                               child: const Text("OK"),
                                               onPressed: () {
                                                 Navigator.pop(context);
-                                                _launchInBrowserView(
-                                                    widget.word.urlString!);
+                                                _launchInBrowserView(ref
+                                                    .watch(wordProvider(
+                                                        widget.wordId))
+                                                    .urlString!);
                                               },
                                             ),
                                           ],

@@ -43,7 +43,7 @@ class _WordListPageState extends State<WordListPage> {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return WordDetailPage(
-                    word: ref.watch(wordListProvider)[index],
+                    wordId: ref.watch(wordListProvider)[index].id,
                   );
                 }));
               },

@@ -10,6 +10,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final wordListProvider = StateNotifierProvider<WordList, List<Word>>(
     (ref) => WordList([], dataSource: WordDataSourceImpl()));
 
+// TODO: 一覧画面のstateをListで管理していて、詳細画面で個別のitemを監視する方法は、、、これで良い？
+final wordProvider = Provider.family<Word, String>((ref, wordId) {
+  return ref
+      .watch(wordListProvider)
+      .firstWhere((element) => element.id == wordId);
+});
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
