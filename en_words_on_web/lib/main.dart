@@ -39,9 +39,17 @@ class MyApp extends StatelessWidget {
       ],
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: const Color.fromRGBO(2, 0, 76, 1)),
+        useMaterial3: false,
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromRGBO(2, 0, 76, 1),
+            brightness: Brightness.dark),
         useMaterial3: true,
       ),
+      themeMode: ThemeMode.system,
       home: const WordListPage(title: '俺の単語帳'),
     );
   }
