@@ -70,136 +70,142 @@ class _WordDetailPageState extends ConsumerState<WordDetailPage> {
         body: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Card(
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('単語'),
-                            const SizedBox(height: 8),
-                            Text(
-                              ref.watch(wordProvider(widget.wordId)).title,
-                              style: const TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ]))),
-              const SizedBox(height: 16),
-              // Description
-              Card(
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('意味'),
-                            const SizedBox(height: 8),
-                            Text(
-                              ref
-                                      .watch(wordProvider(widget.wordId))
-                                      .description ??
-                                  '-',
-                              style: const TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 24),
-                            OutlinedButton(
-                              onPressed: () {
-                                _showLoading();
-                                // DictionaryRequest().fetch('hogehoge').then((value) {
-                                DictionaryRequest()
-                                    .fetch(ref
-                                        .watch(wordProvider(widget.wordId))
-                                        .title)
-                                    .then((response) {
-                                  _hideLoading();
-                                  _setWordDictionary(response.meanings.first
-                                      .definitions.first.definition);
-                                }).catchError((e) {
-                                  _hideLoading();
-                                  _showWordDictionaryError();
-                                });
-                              },
-                              child: _wordDictionaryLoading
-                                  ? const Text('loading...')
-                                  : const Text('check'),
-                            ),
-                            Visibility(
-                              visible: _wordDictionary != null,
-                              maintainSize: false,
-                              child: Text(_wordDictionary?.content ?? ''),
-                            ),
-                            Visibility(
-                              visible: _wordDictionaryError,
-                              maintainSize: false,
-                              child: const Text('エラーが発生しました'),
-                            )
-                          ]))),
-              const SizedBox(height: 16),
-              // URL
-              Card(
-                  child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('URL'),
-                            const SizedBox(height: 8),
-                            Text(
-                              ref
-                                      .watch(wordProvider(widget.wordId))
-                                      .urlString ??
-                                  '-',
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            const SizedBox(height: 24),
-                            if (ref
-                                    .watch(wordProvider(widget.wordId))
-                                    .urlString !=
-                                null)
-                              OutlinedButton(
-                                onPressed: () {
-                                  if (ref
+            child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Card(
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('単語'),
+                                const SizedBox(height: 8),
+                                Text(
+                                  ref.watch(wordProvider(widget.wordId)).title,
+                                  style: const TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ]))),
+                  const SizedBox(height: 16),
+                  // Description
+                  Card(
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('意味'),
+                                const SizedBox(height: 8),
+                                Text(
+                                  ref
                                           .watch(wordProvider(widget.wordId))
-                                          .urlString !=
-                                      null) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          title: const Text("確認"),
-                                          content: const Text("ブラウザで開きますか？"),
-                                          actions: [
-                                            TextButton(
-                                              child: const Text("Cancel"),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            ),
-                                            TextButton(
-                                              child: const Text("OK"),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                _launchInBrowserView(ref
-                                                    .watch(wordProvider(
-                                                        widget.wordId))
-                                                    .urlString!);
-                                              },
-                                            ),
-                                          ],
+                                          .description ??
+                                      '-',
+                                  style: const TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 24),
+                                OutlinedButton(
+                                  onPressed: () {
+                                    _showLoading();
+                                    // DictionaryRequest().fetch('hogehoge').then((value) {
+                                    DictionaryRequest()
+                                        .fetch(ref
+                                            .watch(wordProvider(widget.wordId))
+                                            .title)
+                                        .then((response) {
+                                      _hideLoading();
+                                      _setWordDictionary(response.meanings.first
+                                          .definitions.first.definition);
+                                    }).catchError((e) {
+                                      _hideLoading();
+                                      _showWordDictionaryError();
+                                    });
+                                  },
+                                  child: _wordDictionaryLoading
+                                      ? const Text('loading...')
+                                      : const Text('check'),
+                                ),
+                                Visibility(
+                                  visible: _wordDictionary != null,
+                                  maintainSize: false,
+                                  child: Text(_wordDictionary?.content ?? ''),
+                                ),
+                                Visibility(
+                                  visible: _wordDictionaryError,
+                                  maintainSize: false,
+                                  child: const Text('エラーが発生しました'),
+                                )
+                              ]))),
+                  const SizedBox(height: 16),
+                  // URL
+                  Card(
+                      child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('URL'),
+                                const SizedBox(height: 8),
+                                Text(
+                                  ref
+                                          .watch(wordProvider(widget.wordId))
+                                          .urlString ??
+                                      '-',
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                                const SizedBox(height: 24),
+                                if (ref
+                                        .watch(wordProvider(widget.wordId))
+                                        .urlString !=
+                                    null)
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      if (ref
+                                              .watch(
+                                                  wordProvider(widget.wordId))
+                                              .urlString !=
+                                          null) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: const Text("確認"),
+                                              content:
+                                                  const Text("ブラウザで開きますか？"),
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text("Cancel"),
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                ),
+                                                TextButton(
+                                                  child: const Text("OK"),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    _launchInBrowserView(ref
+                                                        .watch(wordProvider(
+                                                            widget.wordId))
+                                                        .urlString!);
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
                                         );
-                                      },
-                                    );
-                                  }
-                                },
-                                child: const Text('開く'),
-                              ),
-                          ]))),
-            ])));
+                                      }
+                                    },
+                                    child: const Text('開く'),
+                                  ),
+                              ]))),
+                ]))));
   }
 
   Future<void> _launchInBrowserView(String urlString) async {
