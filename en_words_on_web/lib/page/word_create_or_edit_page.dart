@@ -17,7 +17,6 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
   String _title = "";
   String _description = "";
   String _urlString = "";
-  // bool _canFinish = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -44,9 +43,6 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
           key: _formKey,
           child: Container(
               padding: const EdgeInsets.all(16),
-              // TODO: Formで囲むと良い？？
-              // https://qiita.com/kurun_pan/items/3378875ff034614f381a#form
-              // validationの処理などを綺麗に書ける？
               child: Column(
                 children: [
                   TextFormField(
@@ -94,6 +90,7 @@ class _WordCreateOrEditPageState extends State<WordCreateOrEditPage> {
                             return;
                           }
 
+                          // Formのsave()でやるべき？？
                           String? finalDescription =
                               _description.isEmpty ? null : _description;
                           String? finalUrlString =
