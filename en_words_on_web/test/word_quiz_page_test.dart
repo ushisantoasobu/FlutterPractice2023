@@ -2,7 +2,7 @@ import 'package:en_words_on_web/data/word_list.dart';
 import 'package:en_words_on_web/main.dart';
 import 'package:en_words_on_web/model/word.dart';
 import 'package:en_words_on_web/page/word_quiz_page.dart';
-import 'package:en_words_on_web/repository/word_data_source.dart';
+import 'package:en_words_on_web/dataSource/word_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

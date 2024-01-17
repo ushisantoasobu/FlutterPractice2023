@@ -1,5 +1,5 @@
 import 'package:en_words_on_web/model/word.dart';
-import 'package:en_words_on_web/repository/word_data_source.dart';
+import 'package:en_words_on_web/dataSource/word_data_source.dart';
 import 'package:riverpod/riverpod.dart';
 
 class WordList extends StateNotifier<List<Word>> {
