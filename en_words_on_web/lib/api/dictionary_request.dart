@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:en_words_on_web/model/dictionary_word.dart';
 import 'package:http/http.dart' as http;
 
 class DictionaryRequest {
